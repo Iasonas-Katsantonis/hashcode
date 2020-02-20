@@ -36,15 +36,15 @@ public class Library {
         return "{" + id + ", " + N + ", " + T + ", " + M + "}";
     }
 
-    public void init(int D) {
+    public void init(int daysRemaining) {
         if (sorter == null) {
             sorter = new SortBooks();
         }
         Collections.sort(books, sorter);
 
-        int daysMax = D - T;
+        int daysMax = daysRemaining - T;
         int booksMax = daysMax * M;
-        int booksTotal = min(daysMax * booksMax, books.size());
+        int booksTotal = min(booksMax, books.size());
 
         for (int i = 0; i < booksTotal; i++) {
             Book book = books.get(i);
