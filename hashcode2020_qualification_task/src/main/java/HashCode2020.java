@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HashCode2020 {
 
@@ -75,6 +77,7 @@ public class HashCode2020 {
                     writer.println();
                 }
             }
+            writer.flush();
         }
     }
 
@@ -86,7 +89,6 @@ public class HashCode2020 {
     }
 
     private Solution solve(Problem problem) {
-        Collections.sort(problem.libraries, new Sort1());
         Solution solution = new Solution();
         assign(problem, solution);
         return solution;
@@ -97,12 +99,19 @@ public class HashCode2020 {
         List<Library> librariesSolution = solution.libraries;
         librariesSolution.clear();
         int daysRemaining = problem.D;
+        Set<Book> booksScanned = new HashSet<>();
+        Library library;
+        Comparator<Library> sort = new Sort1();
 
-        for (Library library : librariesProblem) {
+        while (librariesProblem.size() > 0) {
+            Collections.sort(problem.libraries, sort);
+            library = librariesProblem.remove(0);
             daysRemaining -= library.T;
             if (daysRemaining <= 0) break;
-            librariesSolution.add(library);
+            library.books.removeAll(booksScanned);
             library.scan(daysRemaining);
+            booksScanned.addAll(library.booksToScan);
+            librariesSolution.add(library);
         }
     }
 
@@ -110,6 +119,7 @@ public class HashCode2020 {
         HashCode2020 taxis = new HashCode2020();
         for (String arg : args) {
             String filename = arg;
+            System.out.println(filename);
             File fileIn = new File(filename);
             int indexExt = filename.lastIndexOf('.');
             if (indexExt >= 0) {

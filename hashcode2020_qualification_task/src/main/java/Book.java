@@ -11,4 +11,9 @@ public class Book {
     public String toString() {
         return "{" + id + ", " + score + "}";
     }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
