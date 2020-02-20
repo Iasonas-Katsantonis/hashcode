@@ -22,7 +22,7 @@ public class Library {
      */
     int M;
 
-    int comparator;
+    int booksScore;
     final List<Book> booksToScan = new ArrayList<>();
 
     private static Comparator<Book> sorter;
@@ -46,9 +46,10 @@ public class Library {
         int booksMax = daysMax * M;
         int booksTotal = min(booksMax, books.size());
 
+        Book book;
         for (int i = 0; i < booksTotal; i++) {
-            Book book = books.get(i);
-            comparator += book.score;
+            book = books.get(i);
+            booksScore += book.score;
         }
     }
 

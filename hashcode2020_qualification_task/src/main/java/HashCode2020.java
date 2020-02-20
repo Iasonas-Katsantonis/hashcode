@@ -58,23 +58,26 @@ public class HashCode2020 {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileOut))) {
             List<Library> libraries = solution.libraries;
             final int a = libraries.size();
+            Library library;
+            List<Book> books;
+            int k;
+
             writer.println(a);
             for (int i = 0; i < a; i++) {
-                Library library = libraries.get(i);
-                List<Book> books = library.booksToScan;
-                int k = books.size();
-                if (k > 0) {
-                    writer.print(library.id);
-                    writer.print(' ');
-                    writer.println(k);
+                library = libraries.get(i);
+                books = library.booksToScan;
+                k = books.size();
+                if (k == 0) throw new IndexOutOfBoundsException();
+                writer.print(library.id);
+                writer.print(' ');
+                writer.println(k);
 
-                    for (int j = 0; j < k; j++) {
-                        Book book = books.get(j);
-                        if (j > 0) writer.print(' ');
-                        writer.print(book.id);
-                    }
-                    writer.println();
+                for (int j = 0; j < k; j++) {
+                    Book book = books.get(j);
+                    if (j > 0) writer.print(' ');
+                    writer.print(book.id);
                 }
+                writer.println();
             }
             writer.flush();
         }
@@ -100,7 +103,7 @@ public class HashCode2020 {
         int daysRemaining = problem.D;
         Set<Book> booksScanned = new HashSet<>();
         Library library;
-        Comparator<Library> sort = new Sort1();
+        Comparator<Library> sorter = new SortLibraries1();
         int size = librariesProblem.size();
 
         while (size > 0) {
@@ -109,14 +112,16 @@ public class HashCode2020 {
                 library.books.removeAll(booksScanned);
                 library.init(daysRemaining);
             }
-            Collections.sort(problem.libraries, sort);
+            Collections.sort(problem.libraries, sorter);
             library = librariesProblem.remove(0);
             size--;
             daysRemaining -= library.T;
             if (daysRemaining <= 0) break;
             library.scan(daysRemaining);
-            booksScanned.addAll(library.booksToScan);
-            librariesSolution.add(library);
+            if (library.booksToScan.size() > 0) {
+                booksScanned.addAll(library.booksToScan);
+                librariesSolution.add(library);
+            }
         }
     }
 
