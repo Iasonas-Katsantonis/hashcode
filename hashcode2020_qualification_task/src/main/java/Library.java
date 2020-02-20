@@ -45,4 +45,16 @@ public class Library {
             comparator += book.score;
         }
     }
+
+    public void scan(int daysMax) {
+        booksToScan.clear();
+
+        int booksMax = daysMax * M;
+        int booksTotal = min(daysMax * booksMax, books.size());
+
+        for (int i = 0; i < booksTotal; i++) {
+            Book book = books.get(i);
+            booksToScan.add(book);
+        }
+    }
 }

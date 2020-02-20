@@ -65,13 +65,12 @@ public class HashCode2020 {
                 if (k > 0) {
                     writer.print(library.id);
                     writer.print(' ');
-
                     writer.println(k);
 
                     for (int j = 0; j < k; j++) {
                         Book book = books.get(j);
                         if (j > 0) writer.print(' ');
-                        writer.println(book.id);
+                        writer.print(book.id);
                     }
                     writer.println();
                 }
@@ -97,14 +96,13 @@ public class HashCode2020 {
         List<Library> librariesProblem = problem.libraries;
         List<Library> librariesSolution = solution.libraries;
         librariesSolution.clear();
-        int day = 0;
         int daysRemaining = problem.D;
 
         for (Library library : librariesProblem) {
             daysRemaining -= library.T;
             if (daysRemaining <= 0) break;
             librariesSolution.add(library);
-//            day +=
+            library.scan(daysRemaining);
         }
     }
 
