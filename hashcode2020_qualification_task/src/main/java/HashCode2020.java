@@ -48,7 +48,6 @@ public class HashCode2020 {
                     Book book = problem.books.get(bid);
                     library.books.add(book);
                 }
-                library.init(problem.D);
             }
         }
 
@@ -102,13 +101,19 @@ public class HashCode2020 {
         Set<Book> booksScanned = new HashSet<>();
         Library library;
         Comparator<Library> sort = new Sort1();
+        int size = librariesProblem.size();
 
-        while (librariesProblem.size() > 0) {
+        while (size > 0) {
+            for (int i = 0; i < size; i++) {
+                library = librariesProblem.get(i);
+                library.books.removeAll(booksScanned);
+                library.init(daysRemaining);
+            }
             Collections.sort(problem.libraries, sort);
             library = librariesProblem.remove(0);
+            size--;
             daysRemaining -= library.T;
             if (daysRemaining <= 0) break;
-            library.books.removeAll(booksScanned);
             library.scan(daysRemaining);
             booksScanned.addAll(library.booksToScan);
             librariesSolution.add(library);

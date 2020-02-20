@@ -8,12 +8,12 @@ public class Solution {
 
     public int score() {
         int score = 0;
-        Set<Integer> bookIds = new HashSet<>();
+        Set<Book> bookIds = new HashSet<>();
         for (Library library : libraries) {
             for (Book book : library.booksToScan) {
-                if (!bookIds.contains(book.id)) {
+                if (!bookIds.contains(book)) {
                     score += book.score;
-                    bookIds.add(book.id);
+                    bookIds.add(book);
                 }
             }
         }

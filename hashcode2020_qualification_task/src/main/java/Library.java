@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Math.min;
@@ -24,6 +25,8 @@ public class Library {
     int comparator;
     final List<Book> booksToScan = new ArrayList<>();
 
+    private static Comparator<Book> sorter;
+
     public Library(int id) {
         this.id = id;
     }
@@ -34,7 +37,10 @@ public class Library {
     }
 
     public void init(int D) {
-        Collections.sort(books, new SortBooks());
+        if (sorter == null) {
+            sorter = new SortBooks();
+        }
+        Collections.sort(books, sorter);
 
         int daysMax = D - T;
         int booksMax = daysMax * M;
