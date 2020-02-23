@@ -48,6 +48,8 @@ public class Library {
         int booksTotal = min(booksMax, books.size());
 
         Book book;
+        booksScore = 0;
+
         for (int i = 0; i < booksTotal; i++) {
             book = books.get(i);
             booksScore += book.score;

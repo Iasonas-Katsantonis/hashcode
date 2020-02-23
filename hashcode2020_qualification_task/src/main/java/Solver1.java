@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,7 +23,7 @@ public class Solver1 {
         List<Library> librariesSolution = solution.libraries;
         librariesSolution.clear();
         int daysRemaining = problem.D;
-        Collection<Book> booksScanned = new ArrayList<>();
+        Collection<Book> booksScanned;
         Library library;
         Comparator<Library> sorter = new SortLibraries1();
         int size = librariesProblem.size();
@@ -32,19 +31,22 @@ public class Solver1 {
         while (size > 0) {
             for (int i = 0; i < size; i++) {
                 library = librariesProblem.get(i);
-                library.books.removeAll(booksScanned);
                 library.init(daysRemaining);
             }
             Collections.sort(librariesProblem, sorter);
             library = librariesProblem.remove(0);
             size--;
-            booksScanned.clear();
             library.scan(daysRemaining);
             if (library.booksToScan.size() > 0) {
-                booksScanned.addAll(library.booksToScan);
+                booksScanned = library.booksToScan;
                 librariesSolution.add(library);
                 daysRemaining -= library.T;
                 if (daysRemaining <= 0) break;
+
+                for (int i = 0; i < size; i++) {
+                    library = librariesProblem.get(i);
+                    library.books.removeAll(booksScanned);
+                }
             }
         }
     }
