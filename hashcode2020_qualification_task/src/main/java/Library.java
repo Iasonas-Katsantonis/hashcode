@@ -23,6 +23,7 @@ public class Library {
     int M;
 
     int booksScore;
+    int booksScorePerDay;
     final List<Book> booksToScan = new ArrayList<>();
 
     private static Comparator<Book> sorter;
@@ -51,6 +52,7 @@ public class Library {
             book = books.get(i);
             booksScore += book.score;
         }
+        booksScorePerDay = booksScore / T;
     }
 
     public void scan(int daysMax) {

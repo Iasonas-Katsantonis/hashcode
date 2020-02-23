@@ -6,9 +6,14 @@ import java.util.Set;
 import static java.lang.Math.min;
 
 public class Solution {
+    final Problem problem;
     final List<Library> libraries = new ArrayList<>();
 
-    public int score(Problem problem) {
+    public Solution(Problem problem) {
+        this.problem = problem;
+    }
+
+    public int score() {
         int daysRemaining = problem.D;
         int booksToScan;
         int score = 0;
