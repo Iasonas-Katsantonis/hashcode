@@ -1,4 +1,3 @@
-# Google hash code, Qualification Round, 2020
-## Book scanning
+![Google Hash Code](https://i.imgur.com/KTDA2IL.png)
 
-Solutions from team Tikal Warriors
+# Google hash code
