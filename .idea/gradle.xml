@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/hashcode2020_qualification_task" />
+            <option value="$PROJECT_DIR$/pizza" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

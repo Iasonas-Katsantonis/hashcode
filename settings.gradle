@@ -1,1 +1,2 @@
+include ':pizza'
 include ':hashcode2020_qualification_task'
