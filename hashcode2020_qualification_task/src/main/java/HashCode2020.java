@@ -10,20 +10,21 @@ public class HashCode2020 {
 
     private void solve(File fileIn, File fileOut) throws IOException {
         ProblemParser parser = new ProblemParser();
-        Problem problem = parser.parse(fileIn);
         Solution solution = null;
         int score = 0;
 
-        Solution solution1 = solve1(problem);
-        int score1 = solution1.score(problem);
+        Problem problem1 = parser.parse(fileIn);
+        Solution solution1 = solve1(problem1);
+        int score1 = solution1.score(problem1);
         System.out.println("solution 1: " + score1);
         if (score1 > score) {
             score = score1;
             solution = solution1;
         }
 
-        Solution solution2 = solve2(problem);
-        int score2 = solution2.score(problem);
+        Problem problem2 = parser.parse(fileIn);
+        Solution solution2 = solve2(problem2);
+        int score2 = solution2.score(problem2);
         System.out.println("solution 2: " + score2);
         if (score2 > score) {
             score = score2;
@@ -43,7 +44,7 @@ public class HashCode2020 {
     }
 
     private void assign1(Problem problem, Solution solution) {
-        List<Library> librariesProblem = new ArrayList<>(problem.libraries);
+        List<Library> librariesProblem = problem.libraries;
         List<Library> librariesSolution = solution.libraries;
         librariesSolution.clear();
         int daysRemaining = problem.D;
@@ -55,7 +56,7 @@ public class HashCode2020 {
         while (size > 0) {
             for (int i = 0; i < size; i++) {
                 library = librariesProblem.get(i);
-                library.booksToAssign.removeAll(booksScanned);
+                library.books.removeAll(booksScanned);
                 library.init(daysRemaining);
             }
             Collections.sort(librariesProblem, sorter);
@@ -79,7 +80,7 @@ public class HashCode2020 {
     }
 
     private void assign2(Problem problem, Solution solution) {
-        List<Library> librariesProblem = new ArrayList<>(problem.libraries);
+        List<Library> librariesProblem = problem.libraries;
         List<Library> librariesSolution = solution.libraries;
         librariesSolution.clear();
         int daysRemaining = problem.D;
@@ -91,7 +92,7 @@ public class HashCode2020 {
         while (size > 0) {
             for (int i = 0; i < size; i++) {
                 library = librariesProblem.get(i);
-                library.booksToAssign.removeAll(booksScanned);
+                library.books.removeAll(booksScanned);
                 library.init(daysRemaining);
             }
             Collections.sort(librariesProblem, sorter);
