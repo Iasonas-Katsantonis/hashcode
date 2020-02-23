@@ -9,24 +9,8 @@ import java.util.List;
 
 public class MorePizzaRecursive {
 
-    private static class Pizza {
-        public final int index;
-        public final int slices;
-
-        private Pizza(int index, int slices) {
-            this.index = index;
-            this.slices = slices;
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(slices);
-        }
-    }
-
     private int deltaMin;
     private List<Pizza> candidateSolution = new ArrayList<>();
-    private final Pizza emptyPizza = new Pizza(-1, 0);
 
     private void solve(File fileIn, File fileOut) throws IOException {
         deltaMin = Integer.MAX_VALUE;
@@ -68,7 +52,6 @@ public class MorePizzaRecursive {
     private List<Pizza> solve(int maximumSlices, List<Pizza> pizzas, int pizzaIndex, List<Pizza> candidates, int sumCandidates) {
         if (pizzaIndex >= 0) {
             final int size = pizzas.size();
-//            tab(size - pizzaIndex);
             if (candidates.isEmpty()) {
                 System.out.println("solve: [] " + sumCandidates);
             } else {
@@ -89,8 +72,6 @@ public class MorePizzaRecursive {
                     deltaMin = delta;
                     candidateSolution = pick;
                 }
-//            tab(size - pizzaIndex);
-//            System.out.println("pick: " + pick);
                 List<Pizza> picked = solve(maximumSlices, pizzas, pizzaIndex - 1, pick, sumPick);
                 if (picked != null) {
                     return picked;
@@ -98,8 +79,6 @@ public class MorePizzaRecursive {
             }
 
             List<Pizza> skip = candidates;
-//        tab(size - pizzaIndex);
-//        System.out.println("skip: " + skip);
             List<Pizza> skipped = solve(maximumSlices, pizzas, pizzaIndex - 1, skip, sumCandidates);
             if (skipped != null) {
                 return skipped;
@@ -107,12 +86,6 @@ public class MorePizzaRecursive {
         }
 
         return null;
-    }
-
-    private void tab(int count) {
-        for (int i = 0; i <= count; i++) {
-            System.out.print(" ");
-        }
     }
 
     private int sum(List<Pizza> pizzas) {

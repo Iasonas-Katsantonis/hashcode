@@ -9,21 +9,6 @@ import java.util.List;
 
 public class MorePizza {
 
-    private static class Pizza {
-        final int index;
-        final int slices;
-
-        private Pizza(int index, int slices) {
-            this.index = index;
-            this.slices = slices;
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(slices);
-        }
-    }
-
     private static class SolveStack {
         final int pizzaIndex;
         final List<Pizza> candidates;
