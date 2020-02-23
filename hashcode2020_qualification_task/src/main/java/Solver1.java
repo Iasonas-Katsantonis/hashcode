@@ -38,13 +38,13 @@ public class Solver1 {
             Collections.sort(librariesProblem, sorter);
             library = librariesProblem.remove(0);
             size--;
-            daysRemaining -= library.T;
-            if (daysRemaining <= 0) break;
-            library.scan(daysRemaining);
             booksScanned.clear();
+            library.scan(daysRemaining);
             if (library.booksToScan.size() > 0) {
                 booksScanned.addAll(library.booksToScan);
                 librariesSolution.add(library);
+                daysRemaining -= library.T;
+                if (daysRemaining <= 0) break;
             }
         }
     }
