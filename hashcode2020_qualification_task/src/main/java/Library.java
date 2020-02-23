@@ -23,6 +23,7 @@ public class Library {
     int M;
 
     int booksScore;
+    final List<Book> booksToAssign = new ArrayList<>();
     final List<Book> booksToScan = new ArrayList<>();
 
     private static Comparator<Book> sorter;
@@ -40,15 +41,15 @@ public class Library {
         if (sorter == null) {
             sorter = new SortBooks();
         }
-        Collections.sort(books, sorter);
+        Collections.sort(booksToAssign, sorter);
 
         int daysMax = daysRemaining - T;
         int booksMax = daysMax * M;
-        int booksTotal = min(booksMax, books.size());
+        int booksTotal = min(booksMax, booksToAssign.size());
 
         Book book;
         for (int i = 0; i < booksTotal; i++) {
-            book = books.get(i);
+            book = booksToAssign.get(i);
             booksScore += book.score;
         }
     }
@@ -57,11 +58,16 @@ public class Library {
         booksToScan.clear();
 
         int booksMax = daysMax * M;
-        int booksTotal = min(daysMax * booksMax, books.size());
+        int booksTotal = min(daysMax * booksMax, booksToAssign.size());
 
         for (int i = 0; i < booksTotal; i++) {
-            Book book = books.get(i);
+            Book book = booksToAssign.get(i);
             booksToScan.add(book);
         }
+    }
+
+    public void add(Book book) {
+        books.add(book);
+        booksToAssign.add(book);
     }
 }

@@ -3,18 +3,32 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.Math.min;
+
 public class Solution {
     final List<Library> libraries = new ArrayList<>();
 
-    public int score() {
+    public int score(Problem problem) {
+        int daysRemaining = problem.D;
+        int booksToScan;
         int score = 0;
+        Book book;
         Set<Book> books = new HashSet<>();
+
         for (Library library : libraries) {
-            books.addAll(library.booksToScan);
+            daysRemaining -= library.T;
+            if (daysRemaining <= 0) break;
+            booksToScan = library.M * daysRemaining;
+            booksToScan = min(booksToScan, library.booksToScan.size());
+            for (int b = 0; b < booksToScan; b++) {
+                book = library.booksToScan.get(b);
+                if (!books.contains(book)) {
+                    books.add(book);
+                    score += book.score;
+                }
+            }
         }
-        for (Book book : books) {
-            score += book.score;
-        }
+
         return score;
     }
 }

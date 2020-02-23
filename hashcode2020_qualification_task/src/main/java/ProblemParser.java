@@ -37,7 +37,7 @@ public class ProblemParser {
                 for (int n = 0; n < library.N; n++) {
                     int bid = Integer.parseInt(l2Tokens[n]);
                     Book book = problem.books.get(bid);
-                    library.books.add(book);
+                    library.add(book);
                 }
 
                 problem.libraries.add(library);
