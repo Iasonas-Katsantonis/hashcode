@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 /out
+*.out
