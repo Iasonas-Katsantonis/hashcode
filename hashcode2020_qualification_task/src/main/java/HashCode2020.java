@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -12,92 +9,77 @@ import java.util.Set;
 
 public class HashCode2020 {
 
-    private Problem parse(File fileIn) throws IOException {
-        Problem problem = new Problem();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileIn))) {
-            String row1 = reader.readLine();
-            String[] tokens1 = row1.split(" ");
-            problem.B = Integer.parseInt(tokens1[0]);
-            problem.L = Integer.parseInt(tokens1[1]);
-            problem.D = Integer.parseInt(tokens1[2]);
-            problem.books.clear();
-            problem.libraries.clear();
-
-            String booksRow = reader.readLine();
-            String[] bookScores = booksRow.split(" ");
-            for (int b = 0; b < problem.B; b++) {
-                problem.add(new Book(b, Integer.parseInt(bookScores[b])));
-            }
-
-            for (int l = 0; l < problem.L; l++) {
-                String l1 = reader.readLine();
-                String l2 = reader.readLine();
-
-                String[] l1Tokens = l1.split(" ");
-                String[] l2Tokens = l2.split(" ");
-
-                Library library = new Library(l);
-                problem.libraries.add(library);
-                library.N = Integer.parseInt(l1Tokens[0]);
-                library.T = Integer.parseInt(l1Tokens[1]);
-                library.M = Integer.parseInt(l1Tokens[2]);
-
-                for (int n = 0; n < library.N; n++) {
-                    int bid = Integer.parseInt(l2Tokens[n]);
-                    Book book = problem.books.get(bid);
-                    library.books.add(book);
-                }
-            }
-        }
-
-        return problem;
-    }
-
-    private void write(Solution solution, File fileOut) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileOut))) {
-            List<Library> libraries = solution.libraries;
-            final int a = libraries.size();
-            Library library;
-            List<Book> books;
-            int k;
-
-            writer.println(a);
-            for (int i = 0; i < a; i++) {
-                library = libraries.get(i);
-                books = library.booksToScan;
-                k = books.size();
-                if (k == 0) throw new IndexOutOfBoundsException();
-                writer.print(library.id);
-                writer.print(' ');
-                writer.println(k);
-
-                for (int j = 0; j < k; j++) {
-                    Book book = books.get(j);
-                    if (j > 0) writer.print(' ');
-                    writer.print(book.id);
-                }
-                writer.println();
-            }
-            writer.flush();
-        }
-    }
-
     private void solve(File fileIn, File fileOut) throws IOException {
-        Problem problem = parse(fileIn);
-        Solution solution = solve(problem);
-        System.out.println("solution: " + solution.score());
-        write(solution, fileOut);
+        ProblemParser parser = new ProblemParser();
+        Problem problem = parser.parse(fileIn);
+        Solution solution = null;
+        int score = 0;
+
+        Solution solution1 = solve1(problem);
+        int score1 = solution1.score();
+        System.out.println("solution 1: " + score1);
+        if (score1 > score) {
+            score = score1;
+            solution = solution1;
+        }
+
+        Solution solution2 = solve2(problem);
+        int score2 = solution2.score();
+        System.out.println("solution 2: " + score2);
+        if (score2 > score) {
+            score = score2;
+            solution = solution2;
+        }
+
+        System.out.println("solution: " + score);
+
+        SolutionWriter writer = new SolutionWriter();
+        writer.write(solution, fileOut);
     }
 
-    private Solution solve(Problem problem) {
+    private Solution solve2(Problem problem) {
         Solution solution = new Solution();
-        assign(problem, solution);
+        assign2(problem, solution);
         return solution;
     }
 
-    private void assign(Problem problem, Solution solution) {
-        List<Library> librariesProblem = problem.libraries;
+    private void assign2(Problem problem, Solution solution) {
+        List<Library> librariesProblem = new ArrayList<>(problem.libraries);
+        List<Library> librariesSolution = solution.libraries;
+        librariesSolution.clear();
+        int daysRemaining = problem.D;
+        Set<Book> booksScanned = new HashSet<>();
+        Library library;
+        Comparator<Library> sorter = new SortLibraries2();
+        int size = librariesProblem.size();
+
+        while (size > 0) {
+            for (int i = 0; i < size; i++) {
+                library = librariesProblem.get(i);
+                library.books.removeAll(booksScanned);
+                library.init(daysRemaining);
+            }
+            Collections.sort(librariesProblem, sorter);
+            library = librariesProblem.remove(0);
+            size--;
+            daysRemaining -= library.T;
+            if (daysRemaining <= 0) break;
+            library.scan(daysRemaining);
+            if (library.booksToScan.size() > 0) {
+                booksScanned.addAll(library.booksToScan);
+                librariesSolution.add(library);
+            }
+        }
+    }
+
+    private Solution solve1(Problem problem) {
+        Solution solution = new Solution();
+        assign1(problem, solution);
+        return solution;
+    }
+
+    private void assign1(Problem problem, Solution solution) {
+        List<Library> librariesProblem = new ArrayList<>(problem.libraries);
         List<Library> librariesSolution = solution.libraries;
         librariesSolution.clear();
         int daysRemaining = problem.D;
@@ -112,7 +94,7 @@ public class HashCode2020 {
                 library.books.removeAll(booksScanned);
                 library.init(daysRemaining);
             }
-            Collections.sort(problem.libraries, sorter);
+            Collections.sort(librariesProblem, sorter);
             library = librariesProblem.remove(0);
             size--;
             daysRemaining -= library.T;
