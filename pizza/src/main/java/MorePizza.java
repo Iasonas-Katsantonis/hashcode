@@ -30,13 +30,13 @@ public class MorePizza {
         candidateSolution.clear();
         stack.clear();
 
-        int m;
-        List<Pizza> s = new ArrayList<>();
+        Problem problem = new Problem();
+        List<Pizza> s = problem.pizzas;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileIn))) {
             String row1 = reader.readLine();
             String[] row1Tokens = row1.split(" ");
-            m = Integer.parseInt(row1Tokens[0]);
+            problem.M = Integer.parseInt(row1Tokens[0]);
             int pizzaTypes = Integer.parseInt(row1Tokens[1]);
             String row2 = reader.readLine();
             String[] row2Tokens = row2.split(" ");
@@ -45,28 +45,35 @@ public class MorePizza {
             }
         }
 
-        List<Pizza> solution = solve(m, s);
+        Solution solution = solve(problem);
         if (solution == null) {
-            solution = candidateSolution;
+            solution = new Solution();
+            solution.pizzas.addAll(candidateSolution);
         }
         System.out.println("solution: " + solution);
-        System.out.println("delta: " + (m - sum(solution)));
+        System.out.println("delta: " + (problem.M - sum(solution)));
         write(solution, fileOut);
     }
 
-    private List<Pizza> solve(int maximumSlices, List<Pizza> pizzas) {
+    private Solution solve(Problem problem) {
+        List<Pizza> pizzas = problem.pizzas;
         if (pizzas.isEmpty()) {
-            return pizzas;
+            return null;
         }
 
+        Solution solution = null;
         List<Pizza> candidates = new ArrayList<>();
         SolveStack stackElement = new SolveStack(pizzas.size() - 1, candidates, 0);
         stack.add(stackElement);
-        return solveStack(maximumSlices, pizzas);
+        List<Pizza> solved = solveStack(problem.M, pizzas);
+        if (solved != null) {
+            solution = new Solution();
+            solution.pizzas.addAll(solved);
+        }
+        return solution;
     }
 
     private List<Pizza> solveStack(final int maximumSlices, final List<Pizza> pizzas) {
-        final int size = pizzas.size();
         SolveStack stackElement;
         int pizzaIndex;
         List<Pizza> candidates;
@@ -114,14 +121,14 @@ public class MorePizza {
             if (gcCounter >= 100) {
                 gcCounter = 0;
                 System.gc();
-                System.out.println("mem: " + Runtime.getRuntime().freeMemory());
             }
         }
 
         return null;
     }
 
-    private int sum(List<Pizza> pizzas) {
+    private int sum(Solution solution) {
+        List<Pizza> pizzas = solution.pizzas;
         int sum = 0;
         for (Pizza pizza : pizzas) {
             sum += pizza.slices;
@@ -129,17 +136,19 @@ public class MorePizza {
         return sum;
     }
 
-    private void write(List<Pizza> solution, File fileOut) throws IOException {
+    private void write(Solution solution, File fileOut) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileOut))) {
-            int k = solution.size();
-            writer.println(k);
+            List<Pizza> pizzas = solution.pizzas;
+            int k = pizzas.size();
+            writer.print(k);
+            writer.print('\n');
             for (int i = 0; i < k; i++) {
                 if (i > 0) {
                     writer.print(' ');
                 }
-                writer.print(solution.get(i).index);
+                writer.print(pizzas.get(i).index);
             }
-            writer.println();
+            writer.print('\n');
         }
     }
 
