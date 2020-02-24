@@ -17,11 +17,11 @@ public class MorePizzaRecursive {
 
         Solution solution = solve(problem);
         if (solution == null) {
-            solution = new Solution();
+            solution = new Solution(problem);
             solution.pizzas.addAll(candidateSolution);
         }
         System.out.println("solution: " + solution);
-        System.out.println("delta: " + (problem.M - sum(solution)));
+        System.out.println("delta: " + solution.score());
         new SolutionWriter().write(solution, fileOut);
     }
 
@@ -35,7 +35,7 @@ public class MorePizzaRecursive {
         List<Pizza> candidates = new ArrayList<>();
         List<Pizza> solved = solve(problem.M, pizzas, pizzas.size() - 1, candidates, 0);
         if (solved != null) {
-            solution = new Solution();
+            solution = new Solution(problem);
             solution.pizzas.addAll(solved);
         }
         return solution;
@@ -77,15 +77,6 @@ public class MorePizzaRecursive {
         }
 
         return null;
-    }
-
-    private int sum(Solution solution) {
-        List<Pizza> pizzas = solution.pizzas;
-        int sum = 0;
-        for (Pizza pizza : pizzas) {
-            sum += pizza.slices;
-        }
-        return sum;
     }
 
     public static void main(String[] args) throws Exception {
