@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class SolutionWriter {
+
+    private static final char EOL = '\n';
+
     public void write(Solution solution, File fileOut) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileOut))) {
             List<Library> libraries = solution.libraries;
@@ -13,7 +16,9 @@ public class SolutionWriter {
             List<Book> books;
             int k;
 
-            writer.println(a);
+            writer.print(a);
+            writer.print(EOL);
+
             for (int i = 0; i < a; i++) {
                 library = libraries.get(i);
                 books = library.booksToScan;
@@ -21,14 +26,15 @@ public class SolutionWriter {
                 if (k == 0) throw new IndexOutOfBoundsException();
                 writer.print(library.id);
                 writer.print(' ');
-                writer.println(k);
+                writer.print(k);
+                writer.print(EOL);
 
                 for (int j = 0; j < k; j++) {
                     Book book = books.get(j);
                     if (j > 0) writer.print(' ');
                     writer.print(book.id);
                 }
-                writer.println();
+                writer.print(EOL);
             }
             writer.flush();
         }

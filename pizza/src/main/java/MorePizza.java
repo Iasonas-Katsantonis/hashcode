@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +50,7 @@ public class MorePizza {
         }
         System.out.println("solution: " + solution);
         System.out.println("delta: " + (problem.M - sum(solution)));
-        write(solution, fileOut);
+        new SolutionWriter().write(solution, fileOut);
     }
 
     private Solution solve(Problem problem) {
@@ -134,22 +132,6 @@ public class MorePizza {
             sum += pizza.slices;
         }
         return sum;
-    }
-
-    private void write(Solution solution, File fileOut) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileOut))) {
-            List<Pizza> pizzas = solution.pizzas;
-            int k = pizzas.size();
-            writer.print(k);
-            writer.print('\n');
-            for (int i = 0; i < k; i++) {
-                if (i > 0) {
-                    writer.print(' ');
-                }
-                writer.print(pizzas.get(i).index);
-            }
-            writer.print('\n');
-        }
     }
 
     public static void main(String[] args) throws Exception {
