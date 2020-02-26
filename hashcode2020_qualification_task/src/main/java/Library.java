@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Library {
@@ -22,9 +23,10 @@ public class Library {
      */
     int M;
 
-    int booksScore;
-    int booksScorePerDay;
+    long booksScore;
+    long booksScorePerDay;
     final List<Book> booksToScan = new ArrayList<>();
+    long daysIdle;
 
     private static Comparator<Book> sorter;
 
@@ -34,7 +36,7 @@ public class Library {
 
     @Override
     public String toString() {
-        return "{" + id + ", " + N + ", " + T + ", " + M + "}";
+        return "{" + id + ", N: " + N + ", T: " + T + ", M: " + M + "}";
     }
 
     public void init(int daysRemaining) {
@@ -43,12 +45,13 @@ public class Library {
         }
         Collections.sort(books, sorter);
 
-        int daysMax = daysRemaining - T;
-        int booksMax = daysMax * M;
-        int booksTotal = min(booksMax, books.size());
+        int daysMax = max(daysRemaining - T, 0);
+        long booksMax = daysMax * M;
+        long booksTotal = min(booksMax, books.size());
 
         Book book;
         booksScore = 0;
+        daysIdle = min(1L, booksTotal / M);
 
         for (int i = 0; i < booksTotal; i++) {
             book = books.get(i);
@@ -57,11 +60,11 @@ public class Library {
         booksScorePerDay = booksScore / T;
     }
 
-    public void scan(int daysMax) {
+    public void scan(long daysMax) {
         booksToScan.clear();
 
-        int booksMax = daysMax * M;
-        int booksTotal = min(daysMax * booksMax, books.size());
+        long booksMax = daysMax * M;
+        long booksTotal = min(daysMax * booksMax, books.size());
 
         for (int i = 0; i < booksTotal; i++) {
             Book book = books.get(i);

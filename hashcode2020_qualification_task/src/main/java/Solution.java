@@ -13,10 +13,10 @@ public class Solution {
         this.problem = problem;
     }
 
-    public int score() {
+    public long score() {
         int daysRemaining = problem.D;
         int booksToScan;
-        int score = 0;
+        long score = 0;
         Book book;
         Set<Book> books = new HashSet<>();
 

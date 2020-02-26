@@ -23,10 +23,10 @@ public class HashCode2020 implements Runnable {
 
     private void solve(File fileIn, File fileOut) throws Exception {
         Solution solution = null;
-        int score = 0;
+        long score = 0;
 
         Solution solution1 = new Solver1().solve(fileIn);
-        int score1 = solution1.score();
+        long score1 = solution1.score();
         System.out.println(name + ": solution 1: " + score1);
         if (score1 > score) {
             score = score1;
@@ -34,7 +34,7 @@ public class HashCode2020 implements Runnable {
         }
 
         Solution solution2 = new Solver2().solve(fileIn);
-        int score2 = solution2.score();
+        long score2 = solution2.score();
         System.out.println(name + ": solution 2: " + score2);
         if (score2 > score) {
             score = score2;
