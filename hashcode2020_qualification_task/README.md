@@ -24,7 +24,7 @@ Team name: "Tikal Warriors"
 | B - read on | 5,822,900 |
 | C - incunabula | 5,687,064 |
 | D - tough choices | 5,028,530 |
-| E - so many books | 4,963,504 |
+| E - so many books | 5,033,555 |
 | F - libraries of the world | 5,308,034 |
 |  |  |
-| **Total score** | **26,810,053** |
+| **Total score** | **26,880,104** |
