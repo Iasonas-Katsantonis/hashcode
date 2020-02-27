@@ -26,8 +26,8 @@ public class Library {
     long booksScore;
     long booksScorePerDay;
     final List<Book> booksToScan = new ArrayList<>();
-    long daysIdle;
-    long daysScanning;
+    int daysIdle;
+    int daysScanning;
 
     private static Comparator<Book> sorter;
 
@@ -47,13 +47,13 @@ public class Library {
         Collections.sort(books, sorter);
 
         int daysMax = max(daysRemaining - T, 0);
-        long booksMax = daysMax * M;
-        long booksTotal = min(booksMax, books.size());
+        long booksMax = ((long) daysMax) * M;
+        int booksTotal = (int) min(booksMax, books.size());
 
         Book book;
         booksScore = 0;
-        daysScanning = min(1L, booksTotal / M);
-        daysIdle = max(daysRemaining - daysScanning, 0);
+        daysScanning = max(1, booksTotal / M);
+        daysIdle = max(daysMax - daysScanning, 0);
 
         for (int i = 0; i < booksTotal; i++) {
             book = books.get(i);
@@ -62,11 +62,12 @@ public class Library {
         booksScorePerDay = booksScore / T;
     }
 
-    public void scan(long daysMax) {
+    public void scan(int daysRemaining) {
         booksToScan.clear();
 
-        long booksMax = daysMax * M;
-        long booksTotal = min(booksMax, books.size());
+        int daysMax = max(daysRemaining - T, 0);
+        long booksMax = ((long) daysMax) * M;
+        int booksTotal = (int) min(booksMax, books.size());
 
         for (int i = 0; i < booksTotal; i++) {
             Book book = books.get(i);

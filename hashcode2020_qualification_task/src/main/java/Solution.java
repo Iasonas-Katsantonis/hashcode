@@ -15,6 +15,7 @@ public class Solution {
 
     public long score() {
         int daysRemaining = problem.D;
+        long booksMax;
         int booksToScan;
         long score = 0;
         Book book;
@@ -23,8 +24,8 @@ public class Solution {
         for (Library library : libraries) {
             daysRemaining -= library.T;
             if (daysRemaining <= 0) break;
-            booksToScan = library.M * daysRemaining;
-            booksToScan = min(booksToScan, library.booksToScan.size());
+            booksMax = ((long) daysRemaining) * library.M;
+            booksToScan = (int) min(booksMax, library.booksToScan.size());
             for (int b = 0; b < booksToScan; b++) {
                 book = library.booksToScan.get(b);
                 if (!books.contains(book)) {

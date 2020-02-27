@@ -19,7 +19,7 @@ public class ProblemParser {
             String booksRow = reader.readLine();
             String[] bookScores = booksRow.split(" ");
             for (int b = 0; b < problem.B; b++) {
-                problem.add(new Book(b, Integer.parseInt(bookScores[b])));
+                problem.add(new Book(b, Long.parseLong(bookScores[b])));
             }
 
             for (int l = 0; l < problem.L; l++) {

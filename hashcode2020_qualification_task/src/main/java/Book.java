@@ -1,8 +1,8 @@
 public class Book {
     final int id;
-    final int score;
+    final long score;
 
-    public Book(int id, int score) {
+    public Book(int id, long score) {
         this.id = id;
         this.score = score;
     }

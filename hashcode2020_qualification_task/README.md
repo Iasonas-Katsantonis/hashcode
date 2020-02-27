@@ -22,9 +22,9 @@ Team name: "Tikal Warriors"
 | --- | ---: |
 | A - example | 21 |
 | B - read on | 5,822,900 |
-| C - incunabula | 5,687,064 |
+| C - incunabula | 5,688,501 |
 | D - tough choices | 5,028,530 |
-| E - so many books | 5,033,555 |
+| E - so many books | 5,034,513 |
 | F - libraries of the world | 5,308,034 |
 |  |  |
-| **Total score** | **26,880,104** |
+| **Total score** | **26,882,499** |
