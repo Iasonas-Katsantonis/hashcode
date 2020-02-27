@@ -28,12 +28,13 @@ public class Solver1 {
         Comparator<Library> sorter = new SortLibraries1();
         int size = librariesProblem.size();
 
+        for (int i = 0; i < size; i++) {
+            library = librariesProblem.get(i);
+            library.init(daysRemaining);
+        }
+        Collections.sort(librariesProblem, sorter);
+
         while (size > 0) {
-            for (int i = 0; i < size; i++) {
-                library = librariesProblem.get(i);
-                library.init(daysRemaining);
-            }
-            Collections.sort(librariesProblem, sorter);
             library = librariesProblem.remove(0);
             size--;
             library.scan(daysRemaining);
@@ -46,7 +47,9 @@ public class Solver1 {
                 for (int i = 0; i < size; i++) {
                     library = librariesProblem.get(i);
                     library.books.removeAll(booksScanned);
+                    library.init(daysRemaining);
                 }
+                Collections.sort(librariesProblem, sorter);
             }
         }
     }
