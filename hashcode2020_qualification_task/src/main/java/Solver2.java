@@ -8,8 +8,8 @@ import java.util.List;
 public class Solver2 {
     public Solution solve(File fileIn) throws IOException {
         ProblemParser parser = new ProblemParser();
-        Problem problem1 = parser.parse(fileIn);
-        return solve(problem1);
+        Problem problem = parser.parse(fileIn);
+        return solve(problem);
     }
 
     private Solution solve(Problem problem) {
