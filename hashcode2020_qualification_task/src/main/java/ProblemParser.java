@@ -2,10 +2,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProblemParser {
     public Problem parse(File fileIn) throws IOException {
         Problem problem = new Problem();
+        Map<Integer, Book> books = new HashMap<>();
+        Book book;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileIn))) {
             String row1 = reader.readLine();
@@ -19,7 +23,9 @@ public class ProblemParser {
             String booksRow = reader.readLine();
             String[] bookScores = booksRow.split(" ");
             for (int b = 0; b < problem.B; b++) {
-                problem.add(new Book(b, Long.parseLong(bookScores[b])));
+                book = new Book(b, Long.parseLong(bookScores[b]));
+                problem.add(book);
+                books.put(book.id, book);
             }
 
             for (int l = 0; l < problem.L; l++) {
@@ -36,7 +42,7 @@ public class ProblemParser {
 
                 for (int n = 0; n < library.N; n++) {
                     int bid = Integer.parseInt(l2Tokens[n]);
-                    Book book = problem.books.get(bid);
+                    book = books.get(bid);
                     library.add(book);
                 }
 

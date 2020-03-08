@@ -1,14 +1,15 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Library {
     final int id;
-    final List<Book> books = new ArrayList<>();
+    final Collection<Book> books = new TreeSet<>();
 
     /**
      * the number of books
@@ -41,27 +42,27 @@ public class Library {
         return "{" + id + ", N: " + N + ", T: " + T + ", M: " + M + "}";
     }
 
-    public void init(int daysRemaining) {
-        if (sorter == null) {
-            sorter = new SortBooks();
-        }
-        Collections.sort(books, sorter);
+    public void add(Book book) {
+        books.add(book);
+    }
 
+    public void init(int daysRemaining) {
         int daysMax = max(daysRemaining - T, 0);
         long booksMax = ((long) daysMax) * M;
         int booksTotal = (int) min(booksMax, books.size());
 
-        Book book;
         booksScore = 0;
         daysScanning = max(1, booksTotal / M);
         daysIdle = max(daysMax - daysScanning, 0);
 
-        for (int i = 0; i < booksTotal; i++) {
-            book = books.get(i);
+        int i = 0;
+        for (Book book : books) {
             booksScore += book.score;
+            if ((++i) >= booksTotal) break;
         }
         booksScorePerSignup = booksScore / T;
         booksScorePerDay = booksScore / daysScanning;
+        booksToScan.clear();
     }
 
     public void scan(int daysRemaining) {
@@ -71,13 +72,24 @@ public class Library {
         long booksMax = ((long) daysMax) * M;
         int booksTotal = (int) min(booksMax, books.size());
 
-        for (int i = 0; i < booksTotal; i++) {
-            Book book = books.get(i);
+        int i = 0;
+        for (Book book : books) {
             booksToScan.add(book);
+            if ((++i) >= booksTotal) break;
         }
     }
 
-    public void add(Book book) {
-        books.add(book);
+    public boolean scan(Book book, int daysRemaining) {
+        if ((daysRemaining > T) && books.contains(book)) {
+            int daysMax = max(daysRemaining - T, 0);
+            long booksMax = ((long) daysMax) * M;
+            int booksTotal = (int) min(booksMax, books.size());
+
+            if (booksToScan.size() < booksTotal) {
+                booksToScan.add(book);
+                return true;
+            }
+        }
+        return false;
     }
 }

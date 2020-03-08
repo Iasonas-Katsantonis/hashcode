@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeSet;
 
 public class Problem {
     /**
@@ -17,11 +17,11 @@ public class Problem {
      */
     int D;
 
-    final Map<Integer, Book> books = new HashMap<>();
+    final Collection<Book> books = new TreeSet<>();
 
     final List<Library> libraries = new ArrayList<>();
 
     public void add(Book book) {
-        books.put(book.id, book);
+        books.add(book);
     }
 }

@@ -41,6 +41,14 @@ public class HashCode2020 implements Runnable {
             solution = solution2;
         }
 
+        Solution solution3 = new Solver3().solve(fileIn);
+        long score3 = solution3.score();
+        System.out.println(name + ": solution 3: " + score3 + " ~ 5688501");
+        if (score3 > score) {
+            score = score3;
+            solution = solution3;
+        }
+
         System.out.println(name + ": solution: " + score);
 
         if (solution == null) throw new NullPointerException("solution expected!");
