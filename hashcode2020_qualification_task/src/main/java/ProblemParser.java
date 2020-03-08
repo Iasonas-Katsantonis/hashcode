@@ -35,12 +35,12 @@ public class ProblemParser {
                 String[] l1Tokens = l1.split(" ");
                 String[] l2Tokens = l2.split(" ");
 
-                Library library = new Library(l);
-                library.N = Integer.parseInt(l1Tokens[0]);
-                library.T = Integer.parseInt(l1Tokens[1]);
-                library.M = Integer.parseInt(l1Tokens[2]);
+                int N = Integer.parseInt(l1Tokens[0]);
+                int T = Integer.parseInt(l1Tokens[1]);
+                int M = Integer.parseInt(l1Tokens[2]);
+                Library library = new Library(l, N, T, M);
 
-                for (int n = 0; n < library.N; n++) {
+                for (int n = 0; n < N; n++) {
                     int bid = Integer.parseInt(l2Tokens[n]);
                     book = books.get(bid);
                     library.add(book);

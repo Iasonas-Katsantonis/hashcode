@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -22,39 +21,46 @@ public class Solver3 {
         Solution solution = new Solution(problem);
         List<Library> librariesSolution = solution.libraries;
 
-        Map<Book, List<Library>> librariesPerBook = getLibrariesPerBook(problem);
+        Map<Integer, Library> librariesById = new HashMap<>();
+        for (Library library : problem.libraries) {
+            librariesById.put(library.id, library);
+        }
+
+        List<BooksSameScore> librariesPerBookPerScore = new ArrayList<>(getLibrariesPerBookPerScore(problem));
+        Collections.sort(librariesPerBookPerScore, new SortSameScore());
+
+        Collection<Book> booksUnused = new TreeSet<>();
+        for (BooksSameScore bss : librariesPerBookPerScore) {
+            booksUnused.addAll(bss.books);
+        }
+
+        Collection<Book> books;
         List<Library> libraries;
         Library library;
+        boolean libraryScanning;
         int daysRemaining = problem.D;
         Map<Library, Integer> daysPerLibrary = new HashMap<>();
         int days;
-        Collection<Book> booksUnused = new TreeSet<>(librariesPerBook.keySet());
-        boolean scanned;
 
-        for (Book book : librariesPerBook.keySet()) {
-            libraries = librariesPerBook.get(book);
-            scanned = false;
+        for (BooksSameScore booksSameScore : librariesPerBookPerScore) {
+            libraries = booksSameScore.libraries;
 
-            library = findLibraryScanning(libraries, librariesSolution);
-            while (!scanned && (library != null)) {
-                libraries.remove(library);
-                days = daysPerLibrary.get(library);
-                if (library.scan(book, days)) {
-                    scanned = true;
-                    booksUnused.remove(book);
-                } else {
-                    library = findLibraryScanning(libraries, librariesSolution);
-                }
-            }
-            while (!scanned && (libraries.size() > 0)) {
-                library = libraries.remove(0);
-                days = daysRemaining;
-                if (library.scan(book, days)) {
-                    scanned = true;
-                    booksUnused.remove(book);
-                    librariesSolution.add(library);
-                    daysPerLibrary.put(library, days);
-                    daysRemaining -= library.T;
+            for (Library lib : libraries) {
+                library = librariesById.get(lib.id);
+                books = lib.books;
+                libraryScanning = daysPerLibrary.containsKey(library);
+                days = libraryScanning ? daysPerLibrary.get(library) : daysRemaining;
+
+                for (Book book : books) {
+                    if (library.scan(book, days)) {
+                        booksUnused.remove(book);
+                        if (!libraryScanning) {
+                            libraryScanning = true;
+                            librariesSolution.add(library);
+                            daysPerLibrary.put(library, days);
+                            daysRemaining -= library.T;
+                        }
+                    }
                 }
             }
         }
@@ -75,26 +81,28 @@ public class Solver3 {
         return null;
     }
 
-    private SortedMap<Book, List<Library>> getLibrariesPerBook(Problem problem) {
+    private Collection<BooksSameScore> getLibrariesPerBookPerScore(Problem problem) {
         List<Library> librariesProblem = new ArrayList<>(problem.libraries);
-        SortedMap<Book, List<Library>> librariesPerBook = new TreeMap<>();
-        List<Library> libraries;
+        Map<Long, BooksSameScore> result = new TreeMap<>();
+        BooksSameScore booksSameScore;
         Comparator<Library> librarySorter = new SortLibraries3();
+        long score;
 
         Collections.sort(librariesProblem, librarySorter);
 
         for (Library library : librariesProblem) {
             library.init(problem.D);
             for (Book book : library.books) {
-                libraries = librariesPerBook.get(book);
-                if (libraries == null) {
-                    libraries = new ArrayList<>();
-                    librariesPerBook.put(book, libraries);
+                score = book.score;
+                booksSameScore = result.get(score);
+                if (booksSameScore == null) {
+                    booksSameScore = new BooksSameScore(score);
+                    result.put(score, booksSameScore);
                 }
-                libraries.add(library);
+                booksSameScore.add(book, library);
             }
         }
 
-        return librariesPerBook;
+        return result.values();
     }
 }

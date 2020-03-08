@@ -14,15 +14,15 @@ public class Library {
     /**
      * the number of books
      */
-    int N;
+    final int N;
     /**
      * the number of days it takes to finish the library signup process
      */
-    int T;
+    final int T;
     /**
      * the number of books that can be shipped
      */
-    int M;
+    final int M;
 
     long booksScore;
     long booksScorePerSignup;
@@ -33,8 +33,16 @@ public class Library {
 
     private static Comparator<Book> sorter;
 
-    public Library(int id) {
+    public Library(int id, int n, int t, int m) {
         this.id = id;
+        this.N = n;
+        this.T = t;
+        this.M = m;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override
