@@ -1,15 +1,14 @@
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Library {
     final int id;
-    final Collection<Book> books = new TreeSet<>();
+    final List<Book> books = new ArrayList<>();
 
     /**
      * the number of books
@@ -52,6 +51,7 @@ public class Library {
 
     public void add(Book book) {
         books.add(book);
+        Collections.sort(books);
     }
 
     public void init(int daysRemaining) {
@@ -73,7 +73,7 @@ public class Library {
         booksToScan.clear();
     }
 
-    public void scan(int daysRemaining) {
+    public List<Book> scan(int daysRemaining) {
         booksToScan.clear();
 
         int daysMax = max(daysRemaining - T, 0);
@@ -85,6 +85,7 @@ public class Library {
             booksToScan.add(book);
             if ((++i) >= booksTotal) break;
         }
+        return booksToScan;
     }
 
     public boolean scan(Book book, int daysRemaining) {

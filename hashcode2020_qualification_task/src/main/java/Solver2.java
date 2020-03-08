@@ -37,9 +37,8 @@ public class Solver2 {
         while (size > 0) {
             library = librariesProblem.remove(0);
             size--;
-            library.scan(daysRemaining);
-            if (library.booksToScan.size() > 0) {
-                booksScanned = library.booksToScan;
+            booksScanned = library.scan(daysRemaining);
+            if (booksScanned.size() > 0) {
                 librariesSolution.add(library);
                 daysRemaining -= library.T;
                 if (daysRemaining <= 0) break;
