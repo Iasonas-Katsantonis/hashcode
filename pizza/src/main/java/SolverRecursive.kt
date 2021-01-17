@@ -1,74 +1,72 @@
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File
+import java.io.IOException
+import java.util.*
 
-public class SolverRecursive {
+class SolverRecursive {
+    private var deltaMin = 0
+    private var candidateSolution: MutableList<Pizza> = ArrayList()
 
-    private int deltaMin;
-    private List<Pizza> candidateSolution = new ArrayList<>();
-
-    public Solution solve(File fileIn) throws IOException {
-        ProblemParser parser = new ProblemParser();
-        Problem problem = parser.parse(fileIn);
-        return solve(problem);
+    @Throws(IOException::class)
+    fun solve(fileIn: File?): Solution {
+        val parser = ProblemParser()
+        val problem = parser.parse(fileIn!!)
+        return solve(problem)
     }
 
-    public Solution solve(Problem problem) {
-        deltaMin = Integer.MAX_VALUE;
-        candidateSolution.clear();
-
-        Solution solution = new Solution(problem);
-        List<Pizza> pizzas = problem.pizzas;
+    fun solve(problem: Problem): Solution {
+        deltaMin = Int.MAX_VALUE
+        candidateSolution.clear()
+        val solution = Solution(problem)
+        val pizzas: List<Pizza> = problem.pizzas
         if (pizzas.isEmpty()) {
-            return solution;
+            return solution
         }
-
-        List<Pizza> candidates = new ArrayList<>();
-        List<Pizza> solved = solve(problem.maximumSlicesCount, pizzas, pizzas.size() - 1, candidates, 0);
+        val candidates: MutableList<Pizza> = ArrayList()
+        val solved = solve(problem.maximumSlicesCount, pizzas, pizzas.size - 1, candidates, 0)
         if (solved != null) {
-            solution.pizzas.addAll(solved);
+            solution.pizzas.addAll(solved)
         } else {
-            solution.pizzas.addAll(candidateSolution);
+            solution.pizzas.addAll(candidateSolution)
         }
-        return solution;
+        return solution
     }
 
-    private List<Pizza> solve(final int maximumSlices, final List<Pizza> pizzas, int pizzaIndex, List<Pizza> candidates, int sumCandidates) {
+    private fun solve(
+        maximumSlices: Int,
+        pizzas: List<Pizza>,
+        pizzaIndex: Int,
+        candidates: List<Pizza>,
+        sumCandidates: Int
+    ): List<Pizza>? {
         if (pizzaIndex >= 0) {
             if (candidates.isEmpty()) {
-                System.out.println("solve: [] " + sumCandidates);
+                println("solve: [] $sumCandidates")
             } else {
-                System.out.println("solve: [" + candidates.get(0) + ", ...] " + sumCandidates);
+                println("solve: [" + candidates[0] + ", ...] " + sumCandidates)
             }
-
-            Pizza candidate = pizzas.get(pizzaIndex);
-
-            List<Pizza> pick = new ArrayList<>(candidates);
-            pick.add(0, candidate);
-            int sumPick = sumCandidates + candidate.slices;
-            int delta = maximumSlices - sumPick;
+            val candidate = pizzas[pizzaIndex]
+            val pick: MutableList<Pizza> = ArrayList(candidates)
+            pick.add(0, candidate)
+            val sumPick = sumCandidates + candidate.slices
+            val delta = maximumSlices - sumPick
             if (delta == 0) {
-                return pick;
+                return pick
             }
             if (delta > 0) {
                 if (delta < deltaMin) {
-                    deltaMin = delta;
-                    candidateSolution = pick;
+                    deltaMin = delta
+                    candidateSolution = pick
                 }
-                List<Pizza> picked = solve(maximumSlices, pizzas, pizzaIndex - 1, pick, sumPick);
+                val picked = solve(maximumSlices, pizzas, pizzaIndex - 1, pick, sumPick)
                 if (picked != null) {
-                    return picked;
+                    return picked
                 }
             }
-
-            List<Pizza> skip = candidates;
-            List<Pizza> skipped = solve(maximumSlices, pizzas, pizzaIndex - 1, skip, sumCandidates);
+            val skipped = solve(maximumSlices, pizzas, pizzaIndex - 1, candidates, sumCandidates)
             if (skipped != null) {
-                return skipped;
+                return skipped
             }
         }
-
-        return null;
+        return null
     }
 }

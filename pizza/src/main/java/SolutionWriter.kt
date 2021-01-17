@@ -1,28 +1,29 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import java.io.File
+import kotlin.Throws
+import java.io.IOException
+import java.io.PrintWriter
+import java.io.FileWriter
 
-public class SolutionWriter {
-
-    private static final char EOL = '\n';
-
-    public void write(Solution solution, File fileOut) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileOut))) {
-            List<Pizza> pizzas = solution.pizzas;
-            int k = pizzas.size();
-            writer.print(k);
-            writer.print(EOL);
-
-            for (int i = 0; i < k; i++) {
+class SolutionWriter {
+    @Throws(IOException::class)
+    fun write(solution: Solution, fileOut: File) {
+        PrintWriter(FileWriter(fileOut)).use { writer ->
+            val pizzas: List<Pizza> = solution.pizzas
+            val k = pizzas.size
+            writer.print(k)
+            writer.print(EOL)
+            for (i in 0 until k) {
                 if (i > 0) {
-                    writer.print(' ');
+                    writer.print(' ')
                 }
-                writer.print(pizzas.get(i).index);
+                writer.print(pizzas[i].index)
             }
-            writer.print(EOL);
-            writer.flush();
+            writer.print(EOL)
+            writer.flush()
         }
+    }
+
+    companion object {
+        private const val EOL = '\n'
     }
 }

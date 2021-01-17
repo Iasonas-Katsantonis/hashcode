@@ -1,11 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList
 
-public class Problem {
+class Problem {
     /**
      * the maximum number of slices.
      */
-    int maximumSlicesCount;
+    var maximumSlicesCount = 0
 
-    final List<Pizza> pizzas = new ArrayList<>();
+    val pizzas: MutableList<Pizza> = ArrayList()
 }

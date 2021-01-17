@@ -1,20 +1,14 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList
 
-public class Solution {
-    final Problem problem;
-    final List<Pizza> pizzas = new ArrayList<>();
+class Solution(private val problem: Problem) {
+    val pizzas: MutableList<Pizza> = ArrayList()
 
-    public Solution(Problem problem) {
-        this.problem = problem;
-    }
-
-    public int score() {
-        List<Pizza> pizzas = this.pizzas;
-        int score = 0;
-        for (Pizza pizza : pizzas) {
-            score += pizza.slices;
+    fun score(): Int {
+        val pizzas = this.pizzas
+        var score = 0
+        for (pizza in pizzas) {
+            score += pizza.slices
         }
-        return problem.maximumSlicesCount - score;
+        return problem.maximumSlicesCount - score
     }
 }
