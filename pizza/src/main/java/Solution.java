@@ -15,6 +15,6 @@ public class Solution {
         for (Pizza pizza : pizzas) {
             score += pizza.slices;
         }
-        return problem.M - score;
+        return problem.maximumSlicesCount - score;
     }
 }

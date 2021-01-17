@@ -41,7 +41,7 @@ public class SolverStack {
         List<Pizza> candidates = new ArrayList<>();
         SolveStack stackElement = new SolveStack(pizzas.size() - 1, candidates, 0);
         stack.add(stackElement);
-        List<Pizza> solved = solve(problem.M, pizzas);
+        List<Pizza> solved = solve(problem.maximumSlicesCount, pizzas);
         if (solved != null) {
             solution.pizzas.addAll(solved);
         } else {

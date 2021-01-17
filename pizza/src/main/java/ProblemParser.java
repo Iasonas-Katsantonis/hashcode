@@ -12,11 +12,11 @@ public class ProblemParser {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileIn))) {
             String row1 = reader.readLine();
             String[] row1Tokens = row1.split(" ");
-            problem.M = Integer.parseInt(row1Tokens[0]);
-            int pizzaTypes = Integer.parseInt(row1Tokens[1]);
+            problem.maximumSlicesCount = Integer.parseInt(row1Tokens[0]);
+            int pizzaTypesCount = Integer.parseInt(row1Tokens[1]);
             String row2 = reader.readLine();
             String[] row2Tokens = row2.split(" ");
-            for (int i = 0; i < pizzaTypes; i++) {
+            for (int i = 0; i < pizzaTypesCount; i++) {
                 s.add(new Pizza(i, Integer.parseInt(row2Tokens[i])));
             }
         }

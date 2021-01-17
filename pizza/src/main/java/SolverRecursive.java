@@ -25,7 +25,7 @@ public class SolverRecursive {
         }
 
         List<Pizza> candidates = new ArrayList<>();
-        List<Pizza> solved = solve(problem.M, pizzas, pizzas.size() - 1, candidates, 0);
+        List<Pizza> solved = solve(problem.maximumSlicesCount, pizzas, pizzas.size() - 1, candidates, 0);
         if (solved != null) {
             solution.pizzas.addAll(solved);
         } else {

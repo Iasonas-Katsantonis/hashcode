@@ -5,7 +5,7 @@ public class Problem {
     /**
      * the maximum number of slices.
      */
-    int M;
+    int maximumSlicesCount;
 
     final List<Pizza> pizzas = new ArrayList<>();
 }
