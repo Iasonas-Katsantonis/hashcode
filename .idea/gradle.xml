@@ -8,8 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/hashcode2020_final_round" />
             <option value="$PROJECT_DIR$/hashcode2020_qualification_task" />
             <option value="$PROJECT_DIR$/pizza" />
+            <option value="$PROJECT_DIR$/pizza.2021" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,2 +1,4 @@
 include ':pizza'
+include ':pizza.2021'
 include ':hashcode2020_qualification_task'
+include ':hashcode2020_final_round'
