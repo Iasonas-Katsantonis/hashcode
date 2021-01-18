@@ -10,9 +10,9 @@ class SolverStack {
     private val stack: MutableList<SolveStack> = ArrayList()
 
     @Throws(IOException::class)
-    fun solve(fileIn: File?): Solution {
+    fun solve(fileIn: File): Solution {
         val parser = ProblemParser()
-        val problem = parser.parse(fileIn!!)
+        val problem = parser.parse(fileIn)
         return solve(problem)
     }
 
