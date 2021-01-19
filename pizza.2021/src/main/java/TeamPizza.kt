@@ -12,9 +12,25 @@ class TeamPizza(private val name: String, private val fileIn: File, private val 
 
     @Throws(IOException::class)
     private fun solve(fileIn: File, fileOut: File) {
-        val solver = Solver1()
-        val solution = solver.solve(fileIn)
-        println(name + ": solution: " + solution.score())
+        var solution: Solution
+        var scoreMax = 0L
+
+        val solver1 = Solver1()
+        val solution1 = solver1.solve(fileIn)
+        val score1 = solution1.score()
+        println("$name: solution 1: $score1")
+        solution = solution1
+        scoreMax = score1
+
+        val solver2 = Solver2()
+        val solution2 = solver2.solve(fileIn)
+        val score2 = solution2.score()
+        println("$name: solution 2: $score2")
+        if (score2 > scoreMax) {
+            solution = solution2
+            scoreMax = score2
+        }
+
         SolutionWriter().write(solution, fileOut)
     }
 

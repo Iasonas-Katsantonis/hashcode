@@ -1,7 +1,8 @@
 import java.io.File
 import java.io.IOException
+import java.util.*
 
-class Solver1 {
+class Solver2 {
 
     @Throws(IOException::class)
     fun solve(fileIn: File): Solution {
@@ -16,6 +17,7 @@ class Solver1 {
         if (pizzas.isEmpty()) {
             return solution
         }
+        pizzas.sortWith(PizzaSorter())
         val teams = solution.teams
 
         val delivered2 = solve(pizzas, 2, problem.numberOf2PersonTeams)
@@ -51,5 +53,11 @@ class Solver1 {
             teams.add(team)
         }
         return teams
+    }
+
+    inner class PizzaSorter : Comparator<Pizza> {
+        override fun compare(o1: Pizza, o2: Pizza): Int {
+            return -o1.toppings.size.compareTo(o2.toppings.size)
+        }
     }
 }
