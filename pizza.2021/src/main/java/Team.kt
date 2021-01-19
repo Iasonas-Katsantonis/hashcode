@@ -1,8 +1,8 @@
-class Team {
+class Team(
     /**
      * the number of people in the team.
      */
-    var numberOfMembers = 0
-
+    val numberOfMembers: Int
+) {
     val pizzas: MutableList<Pizza> = ArrayList()
 }
