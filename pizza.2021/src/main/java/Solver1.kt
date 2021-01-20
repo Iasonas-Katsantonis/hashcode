@@ -1,14 +1,4 @@
-import java.io.File
-import java.io.IOException
-
 class Solver1 {
-
-    @Throws(IOException::class)
-    fun solve(fileIn: File): Solution {
-        val parser = ProblemParser()
-        val problem = parser.parse(fileIn)
-        return solve(problem)
-    }
 
     fun solve(problem: Problem): Solution {
         val solution = Solution(problem)
