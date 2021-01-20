@@ -6,7 +6,7 @@ class Solution(private val problem: Problem) {
     fun score(): Long {
         val teams = this.teams
         var score = 0L
-        val toppings = HashSet<String>()
+        val toppings = HashSet<Int>()
         val pizzasDelivered = HashSet<Int>()
 
         for (team in teams) {

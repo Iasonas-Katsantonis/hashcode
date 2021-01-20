@@ -1,9 +1,7 @@
-import kotlin.Throws
-import java.io.IOException
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
-import java.util.*
+import java.io.IOException
 
 class ProblemParser {
     @Throws(IOException::class)
@@ -20,13 +18,23 @@ class ProblemParser {
             val pizzasCount = problem.numberOfPizzas
             var row: String
             var rowTokens: List<String>
-            var pizzaToppings: MutableSet<String>
+            var pizzaTopping: String
+            var pizzaToppings: MutableSet<Int>
+            val pizzaToppingsIndices = ArrayList<String>()
+            var pizzaToppingIndex: Int
+
             for (i in 1..pizzasCount) {
                 row = reader.readLine()
                 rowTokens = row.split(" ")
-                pizzaToppings = TreeSet<String>()
+                pizzaToppings = HashSet()
                 for (j in 1 until rowTokens.size) {
-                    pizzaToppings.add(rowTokens[j])
+                    pizzaTopping = rowTokens[j]
+                    pizzaToppingIndex = pizzaToppingsIndices.indexOf(pizzaTopping)
+                    if (pizzaToppingIndex < 0) {
+                        pizzaToppingIndex = pizzaToppingsIndices.size
+                        pizzaToppingsIndices.add(pizzaTopping)
+                    }
+                    pizzaToppings.add(pizzaToppingIndex)
                 }
                 s.add(Pizza(i, pizzaToppings))
             }
