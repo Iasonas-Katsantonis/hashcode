@@ -1,8 +1,9 @@
 import java.io.File
 import java.io.IOException
 import java.util.*
+import kotlin.collections.HashSet
 
-class Solver2 {
+class Solver4 {
 
     @Throws(IOException::class)
     fun solve(fileIn: File): Solution {
@@ -55,10 +56,19 @@ class Solver2 {
         return teams
     }
 
-    /** More toppings first. */
+    /** More distinct toppings first. */
     inner class PizzaSorter : Comparator<Pizza> {
         override fun compare(o1: Pizza, o2: Pizza): Int {
-            return -o1.toppings.size.compareTo(o2.toppings.size)
+            val t1 = o1.toppings
+            val t2 = o2.toppings
+            val t3 = t1.size + t2.size
+
+            val toppings = HashSet<String>()
+            toppings.addAll(t1)
+            toppings.addAll(t2)
+            val t = toppings.size
+
+            return t3 - t
         }
     }
 }

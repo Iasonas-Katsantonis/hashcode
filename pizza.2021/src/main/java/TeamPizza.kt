@@ -31,6 +31,24 @@ class TeamPizza(private val name: String, private val fileIn: File, private val 
             scoreMax = score2
         }
 
+        val solver3 = Solver3()
+        val solution3 = solver3.solve(fileIn)
+        val score3 = solution3.score()
+        println("$name: solution 3: $score3")
+        if (score3 > scoreMax) {
+            solution = solution3
+            scoreMax = score3
+        }
+
+        val solver4 = Solver4()
+        val solution4 = solver4.solve(fileIn)
+        val score4 = solution4.score()
+        println("$name: solution 4: $score4")
+        if (score4 > scoreMax) {
+            solution = solution4
+            scoreMax = score4
+        }
+
         SolutionWriter().write(solution, fileOut)
     }
 

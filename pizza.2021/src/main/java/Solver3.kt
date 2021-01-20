@@ -2,7 +2,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class Solver2 {
+class Solver3 {
 
     @Throws(IOException::class)
     fun solve(fileIn: File): Solution {
@@ -20,17 +20,17 @@ class Solver2 {
         pizzas.sortWith(PizzaSorter())
         val teams = solution.teams
 
-        val delivered2 = solve(pizzas, 2, problem.numberOf2PersonTeams)
-        if (delivered2 != null) {
-            teams.addAll(delivered2)
+        val delivered4 = solve(pizzas, 4, problem.numberOf4PersonTeams)
+        if (delivered4 != null) {
+            teams.addAll(delivered4)
         }
         val delivered3 = solve(pizzas, 3, problem.numberOf3PersonTeams)
         if (delivered3 != null) {
             teams.addAll(delivered3)
         }
-        val delivered4 = solve(pizzas, 4, problem.numberOf4PersonTeams)
-        if (delivered4 != null) {
-            teams.addAll(delivered4)
+        val delivered2 = solve(pizzas, 2, problem.numberOf2PersonTeams)
+        if (delivered2 != null) {
+            teams.addAll(delivered2)
         }
 
         return solution
