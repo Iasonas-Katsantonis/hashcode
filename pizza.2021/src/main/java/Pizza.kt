@@ -1,5 +1,9 @@
-class Pizza(val index: Int, val toppings: Set<Int>) {
+class Pizza(val index: Int, val toppings: List<Int>) {
     override fun toString(): String {
-        return toppings.toString()
+        return "$index:$toppings"
+    }
+
+    override fun hashCode(): Int {
+        return index
     }
 }

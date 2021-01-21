@@ -11,15 +11,21 @@ class Solution(private val problem: Problem) {
 
         for (team in teams) {
             toppings.clear()
-            assert(team.numberOfMembers == team.pizzas.size)
+            assert(team.numberOfMembers == team.pizzas.size, "size mismatch: $team")
             for (pizza in team.pizzas) {
                 toppings.addAll(pizza.toppings)
-                assert(!pizzasDelivered.contains(pizza.index))
+                assert(!pizzasDelivered.contains(pizza.index), "$pizza delivered")
                 pizzasDelivered.add(pizza.index)
             }
             score += toppings.size * toppings.size
         }
-        assert(pizzasDelivered.size <= problem.numberOfPizzas)
+        assert(pizzasDelivered.size <= problem.numberOfPizzas, "${pizzasDelivered.size} <= ${problem.numberOfPizzas}")
         return score
+    }
+
+    private fun assert(value: Boolean, message: String) {
+        if (!value) {
+            throw AssertionError(message)
+        }
     }
 }

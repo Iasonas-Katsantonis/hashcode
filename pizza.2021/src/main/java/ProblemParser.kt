@@ -23,7 +23,7 @@ class ProblemParser {
             val pizzaToppingsIndices = ArrayList<String>()
             var pizzaToppingIndex: Int
 
-            for (i in 1..pizzasCount) {
+            for (i in 0 until pizzasCount) {
                 row = reader.readLine()
                 rowTokens = row.split(" ")
                 pizzaToppings = HashSet()
@@ -36,7 +36,7 @@ class ProblemParser {
                     }
                     pizzaToppings.add(pizzaToppingIndex)
                 }
-                s.add(Pizza(i, pizzaToppings))
+                s.add(Pizza(i, pizzaToppings.toList()))
             }
         }
         return problem

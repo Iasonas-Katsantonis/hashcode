@@ -4,5 +4,9 @@ class Team(
      */
     val numberOfMembers: Int
 ) {
-    val pizzas: MutableList<Pizza> = ArrayList()
+    val pizzas: MutableSet<Pizza> = HashSet()
+
+    override fun toString(): String {
+        return "$numberOfMembers:$pizzas"
+    }
 }

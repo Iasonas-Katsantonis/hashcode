@@ -14,9 +14,9 @@ class SolutionWriter {
             writer.print(EOL)
             for (team in teams) {
                 writer.print(team.numberOfMembers)
-                for (i in team.pizzas.indices) {
+                for (p in team.pizzas) {
                     writer.print(' ')
-                    writer.print(team.pizzas[i].index)
+                    writer.print(p.index)
                 }
                 writer.print(EOL)
             }
