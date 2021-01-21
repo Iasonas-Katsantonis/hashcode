@@ -1,4 +1,5 @@
 import java.util.*
+import kotlin.collections.HashSet
 
 class Solver3 {
 
@@ -35,9 +36,9 @@ class Solver3 {
         if (pizzas.isEmpty()) return null
         val teams = ArrayList<Team>()
         for (t in 0 until numberOfTeams) {
+            if (pizzas.size < numberOfTeamMembers) return teams
             val team = Team(numberOfTeamMembers)
             for (m in 0 until numberOfTeamMembers) {
-                if (pizzas.isEmpty()) return teams
                 val pizza = pizzas.removeAt(0)
                 team.pizzas.add(pizza)
             }
@@ -46,10 +47,21 @@ class Solver3 {
         return teams
     }
 
-    /** More toppings first. */
+    /** More distinct toppings first. */
     inner class PizzaSorter : Comparator<Pizza> {
+        private val toppings = HashSet<Int>()
+
         override fun compare(o1: Pizza, o2: Pizza): Int {
-            return -o1.toppings.size.compareTo(o2.toppings.size)
+            val t1 = o1.toppings
+            val t2 = o2.toppings
+            val tTotal = t1.size + t2.size
+
+            toppings.clear()
+            toppings.addAll(t1)
+            toppings.addAll(t2)
+            val tDistinct = toppings.size
+
+            return tTotal - tDistinct
         }
     }
 }

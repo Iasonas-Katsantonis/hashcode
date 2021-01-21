@@ -32,9 +32,9 @@ class Solver1 {
         if (pizzas.isEmpty()) return null
         val teams = ArrayList<Team>()
         for (t in 0 until numberOfTeams) {
+            if (pizzas.size < numberOfTeamMembers) return teams
             val team = Team(numberOfTeamMembers)
             for (m in 0 until numberOfTeamMembers) {
-                if (pizzas.isEmpty()) return teams
                 val pizza = pizzas.removeAt(0)
                 team.pizzas.add(pizza)
             }

@@ -1,7 +1,6 @@
 import java.util.*
-import kotlin.collections.HashSet
 
-class Solver4 {
+class Solver2b {
 
     fun solve(problem: Problem): Solution {
         val solution = Solution(problem)
@@ -12,17 +11,17 @@ class Solver4 {
         pizzas.sortWith(PizzaSorter())
         val teams = solution.teams
 
-        val delivered2 = solve(pizzas, 2, problem.numberOf2PersonTeams)
-        if (delivered2 != null) {
-            teams.addAll(delivered2)
+        val delivered4 = solve(pizzas, 4, problem.numberOf4PersonTeams)
+        if (delivered4 != null) {
+            teams.addAll(delivered4)
         }
         val delivered3 = solve(pizzas, 3, problem.numberOf3PersonTeams)
         if (delivered3 != null) {
             teams.addAll(delivered3)
         }
-        val delivered4 = solve(pizzas, 4, problem.numberOf4PersonTeams)
-        if (delivered4 != null) {
-            teams.addAll(delivered4)
+        val delivered2 = solve(pizzas, 2, problem.numberOf2PersonTeams)
+        if (delivered2 != null) {
+            teams.addAll(delivered2)
         }
 
         return solution
@@ -36,9 +35,9 @@ class Solver4 {
         if (pizzas.isEmpty()) return null
         val teams = ArrayList<Team>()
         for (t in 0 until numberOfTeams) {
+            if (pizzas.size < numberOfTeamMembers) return teams
             val team = Team(numberOfTeamMembers)
             for (m in 0 until numberOfTeamMembers) {
-                if (pizzas.isEmpty()) return teams
                 val pizza = pizzas.removeAt(0)
                 team.pizzas.add(pizza)
             }
@@ -47,21 +46,10 @@ class Solver4 {
         return teams
     }
 
-    /** More distinct toppings first. */
+    /** More toppings first. */
     inner class PizzaSorter : Comparator<Pizza> {
-        private val toppings = HashSet<Int>()
-
         override fun compare(o1: Pizza, o2: Pizza): Int {
-            val t1 = o1.toppings
-            val t2 = o2.toppings
-            val tTotal = t1.size + t2.size
-
-            toppings.clear()
-            toppings.addAll(t1)
-            toppings.addAll(t2)
-            val tDistinct = toppings.size
-
-            return tTotal - tDistinct
+            return -o1.toppings.size.compareTo(o2.toppings.size)
         }
     }
 }
