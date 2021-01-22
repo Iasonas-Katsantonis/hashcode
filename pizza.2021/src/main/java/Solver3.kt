@@ -78,8 +78,6 @@ class Solver3 {
                     next = i
                     if (sizeMin <= 1) break
                 }
-            } else if (delta * 2 < deltaMax) {
-                break
             }
         }
         return pizzas.removeAt(next)
