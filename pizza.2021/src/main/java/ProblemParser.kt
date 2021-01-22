@@ -38,6 +38,8 @@ class ProblemParser {
                 }
                 s.add(Pizza(i, pizzaToppings.toList()))
             }
+
+            pizzaToppingsIndices.clear()
         }
         return problem
     }
