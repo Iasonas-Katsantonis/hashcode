@@ -85,16 +85,12 @@ class Solver3 {
 
     private val toppingsCompare = HashSet<Int>()
 
+    // How much does the new pizza contribute?
     private fun compare(t1: Collection<Int>, t2: Collection<Int>): Int {
-        val s1 = t1.size
-
         toppingsCompare.clear()
-        toppingsCompare.addAll(t1)
         toppingsCompare.addAll(t2)
-        val s3 = toppingsCompare.size
-
-        // How much does the new pizza contribute?
-        return s3 - s1
+        toppingsCompare.removeAll(t1)
+        return toppingsCompare.size
     }
 
     /** Larger toppings first. */
