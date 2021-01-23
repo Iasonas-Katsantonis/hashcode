@@ -1,9 +1,9 @@
 import java.util.*
 import kotlin.collections.HashSet
 
-class Solver3 {
+open class Solver3 {
 
-    fun solve(problem: Problem): Solution {
+    open fun solve(problem: Problem): Solution {
         val solution = Solution(problem)
         val pizzas = ArrayList(problem.pizzas)
         if (pizzas.isEmpty()) {
@@ -31,76 +31,37 @@ class Solver3 {
         return solution
     }
 
-    private fun solve(
+    protected fun solve(
         pizzas: MutableList<Pizza>,
         numberOfTeamMembers: Int,
         numberOfTeams: Int
     ): List<Team>? {
         if (pizzas.isEmpty()) return null
         val teams = ArrayList<Team>()
-        val toppings = HashSet<Int>()
         for (t in 0 until numberOfTeams) {
             if (pizzas.size < numberOfTeamMembers) return teams
             val team = Team(numberOfTeamMembers)
-            var pizza = pizzas.removeAt(0)
-            team.pizzas.add(pizza)
-            toppings.addAll(pizza.toppings)
-            for (m in 1 until numberOfTeamMembers) {
-                pizza = findNextPizza(pizzas, toppings)
+            for (m in 0 until numberOfTeamMembers) {
+                val pizza = pizzas.removeAt(0)
                 team.pizzas.add(pizza)
-                toppings.addAll(pizza.toppings)
             }
-            toppings.clear()
             teams.add(team)
         }
         return teams
     }
 
-    private fun findNextPizza(pizzas: MutableList<Pizza>, toppings: Collection<Int>): Pizza {
-        var next = 0
-        var deltaMax = 0
-        var delta: Int
-        var sizeMin = Int.MAX_VALUE
-        var pizza: Pizza
-        var pizzaSize: Int
-        for (i in 1 until pizzas.size) {
-            pizza = pizzas[i]
-            delta = compare(toppings, pizza.toppings)
-            if (delta > deltaMax) {
-                deltaMax = delta
-                pizzaSize = pizza.toppings.size
-                sizeMin = pizzaSize
-                next = i//TODO if (sizeMin <= 1) break
-            } else if (delta == deltaMax) {
-                pizzaSize = pizza.toppings.size
-                if (pizzaSize < sizeMin) {
-                    sizeMin = pizzaSize
-                    next = i
-                    if (sizeMin <= 1) break
-                }
-            }
-        }
-        return pizzas.removeAt(next)
-    }
-
     private val toppingsCompare = HashSet<Int>()
-
-    // How much does the new pizza contribute?
-    private fun compare(t1: Collection<Int>, t2: Collection<Int>): Int {
-        toppingsCompare.clear()
-        toppingsCompare.addAll(t2)
-        toppingsCompare.removeAll(t1)
-        return toppingsCompare.size
-    }
 
     /** Larger toppings first. */
     inner class PizzaSorter : Comparator<Pizza> {
-        private val toppings = HashSet<Int>()
-
         override fun compare(o1: Pizza, o2: Pizza): Int {
             val t1 = o1.toppings
             val t2 = o2.toppings
             return -t1.compareTo(t2)
         }
+    }
+
+    override fun toString(): String {
+        return javaClass.simpleName
     }
 }

@@ -1,6 +1,6 @@
-open class Solver1 {
+open class Solver1b : Solver1() {
 
-    open fun solve(problem: Problem): Solution {
+    override fun solve(problem: Problem): Solution {
         val solution = Solution(problem)
         val pizzas = ArrayList(problem.pizzas)
         if (pizzas.isEmpty()) {
@@ -22,24 +22,5 @@ open class Solver1 {
         }
 
         return solution
-    }
-
-    protected fun solve(
-        pizzas: MutableList<Pizza>,
-        numberOfTeamMembers: Int,
-        numberOfTeams: Int
-    ): List<Team>? {
-        if (pizzas.isEmpty()) return null
-        val teams = ArrayList<Team>()
-        for (t in 0 until numberOfTeams) {
-            if (pizzas.size < numberOfTeamMembers) return teams
-            val team = Team(numberOfTeamMembers)
-            for (m in 0 until numberOfTeamMembers) {
-                val pizza = pizzas.removeAt(0)
-                team.pizzas.add(pizza)
-            }
-            teams.add(team)
-        }
-        return teams
     }
 }
