@@ -17,13 +17,14 @@ class SolutionWriter {
                 writer.print(EOL)
                 val schedule = intersection.schedule
                 writer.print(schedule.size)
+                writer.print(EOL)
                 for (street in schedule.keys) {
                     val t = schedule[street]
                     writer.print(street.name)
                     writer.print(' ')
                     writer.print(t)
+                    writer.print(EOL)
                 }
-                writer.print(EOL)
             }
             writer.flush()
         }
