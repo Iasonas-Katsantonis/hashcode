@@ -15,7 +15,8 @@ class Traffic(private val name: String, private val fileIn: File, private val fi
         val parser = ProblemParser()
         val problem = parser.parse(fileIn)
 
-//        var solution: Solution
+        var solution: Solution
+        solution = Solution(problem)
 //        var scoreMax: Long
 //
 //        val solver1 = Solver1()
@@ -89,7 +90,7 @@ class Traffic(private val name: String, private val fileIn: File, private val fi
 //        }
 //
 //        println("$name: solution: $scoreMax")
-//        SolutionWriter().write(solution, fileOut)
+        SolutionWriter().write(solution, fileOut)
     }
 
     companion object {
