@@ -37,7 +37,6 @@ open class Solver1 {
         return solution
     }
 
-
     /** Smaller path first. */
     inner class CarSorter : Comparator<Car> {
         override fun compare(o1: Car, o2: Car): Int {
