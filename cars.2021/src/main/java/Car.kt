@@ -1,0 +1,1 @@
+data class Car(val index: Int, val path: Path)

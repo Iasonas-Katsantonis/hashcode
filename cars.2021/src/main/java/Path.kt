@@ -1,0 +1,1 @@
+data class Path(val index: Int, val streets: List<Street>)

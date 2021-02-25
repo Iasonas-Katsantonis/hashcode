@@ -1,0 +1,1 @@
+data class Intersection(val index: Int)
