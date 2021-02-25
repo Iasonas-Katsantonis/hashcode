@@ -10,17 +10,18 @@ Team name: "Pnemonics"
 
 1. Parse input file
 1. Solve
+   1. Sort cars by path
 1. Write solution for traffic with pizzas
 
 ### Score
 
 | Data | Points |
 | --- | ---: |
-| A - An example | 0 |
-| B - By the ocean | 0 |
-| C - Checkmate | 0 |
-| D - Daily commute | 0 |
-| E - Etoile | 0 |
-| F - Forever jammed | 0 |
+| A - An example | 2,002 |
+| B - By the ocean | 4,566,576 |
+| C - Checkmate | 1,298,747 |
+| D - Daily commute | 1,581,942 |
+| E - Etoile | 692,443 |
+| F - Forever jammed | 810,214 |
 | |
-| **Total score** | **0** |
+| **Total score** | **8,951,924** |
