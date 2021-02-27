@@ -1,5 +1,5 @@
-include ':pizza'
+include ':pizza.2020'
 include ':books.2020'
-include ':hashcode2020_final_round'
+include ':phones.2020'
 include ':pizza.2021'
 include ':traffic.2021'
