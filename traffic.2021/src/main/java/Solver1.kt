@@ -8,7 +8,7 @@ open class Solver1 {
         if (cars.isEmpty()) {
             return solution
         }
-        cars.sortWith(CarSorter())
+        cars.sortWith(createSorter())
 
         val maxTime = problem.simulationDuration
         var time = 0
@@ -36,6 +36,8 @@ open class Solver1 {
 
         return solution
     }
+
+    protected open fun createSorter(): Comparator<Car> = CarSorter()
 
     /** Smaller path first. */
     inner class CarSorter : Comparator<Car> {
